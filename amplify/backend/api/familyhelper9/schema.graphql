@@ -1,0 +1,55 @@
+type List
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, create, update, delete] }
+      {
+        allow: groups
+        groups: ["admins"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  listItems: [ListItem] @hasMany
+}
+
+type ListItem
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, create, update, delete] }
+      {
+        allow: groups
+        groups: ["admins"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  quantity: Int
+  done: Boolean
+  actions: [Action] @hasMany
+}
+
+type Action
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, create, update, delete] }
+      {
+        allow: groups
+        groups: ["admins"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  action: String
+}
